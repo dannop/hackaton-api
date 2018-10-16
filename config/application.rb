@@ -21,6 +21,10 @@ module HackatonApi
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
+    # Configuração do fuso horário Brasileiro
+    config.time_zone = 'Brasilia'
+    config.active_record.default_timezone = :local
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -29,5 +33,15 @@ module HackatonApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+  end
+
+  Rails.application.config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins '*'
+
+      resource '*',
+        headers: :any,
+        methods: [:get, :post, :put, :patch, :delete, :options, :head]
+    end
   end
 end
