@@ -10,12 +10,95 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181016133515) do
+ActiveRecord::Schema.define(version: 20181016190525) do
+
+  create_table "achievments", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "coment_coments", force: :cascade do |t|
+    t.string "content"
+    t.integer "user_id"
+    t.integer "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_coment_coments_on_topic_id"
+    t.index ["user_id"], name: "index_coment_coments_on_user_id"
+  end
+
+  create_table "coments", force: :cascade do |t|
+    t.string "content"
+    t.integer "user_id"
+    t.integer "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_coments_on_topic_id"
+    t.index ["user_id"], name: "index_coments_on_user_id"
+  end
+
+  create_table "dislikes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_dislikes_on_topic_id"
+    t.index ["user_id"], name: "index_dislikes_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_likes_on_topic_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.string "name"
+    t.integer "topic_id"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_links_on_topic_id"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.integer "category_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_topics_on_category_id"
+    t.index ["user_id"], name: "index_topics_on_user_id"
+  end
+
+  create_table "user_aches", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "achievment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["achievment_id"], name: "index_user_aches_on_achievment_id"
+    t.index ["user_id"], name: "index_user_aches_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
+    t.string "image"
+    t.integer "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
