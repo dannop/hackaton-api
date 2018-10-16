@@ -5,6 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+
+gem 'active_model_serializers', '~> 0.10.0'
 # Gem para login
 gem 'devise'
 # Gem para popular banco de dados
