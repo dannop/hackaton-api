@@ -33,6 +33,16 @@ class UsersController < ApplicationController
 	end
 	render json: @liked
   end
+  
+  # GET /users/1/disliked_topics
+  def disliked_topics
+	@dlk = Dislike.where(user: params[:user_id])
+	@dliked = []
+	@dlk.each do |l|
+	  @dliked = @dliked + Topic.where(id: l.topic_id)
+	end
+	render json: @dliked
+  end
 
 
   # PATCH/PUT /users/1

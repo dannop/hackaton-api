@@ -11,8 +11,9 @@ Rails.application.routes.draw do
 
   patch '/topics/:topic_id/dislike/:user_id', to: 'topics#dislike'
   patch '/topics/:topic_id/like/:user_id', to: 'topics#like'
-
+  
   get '/users/:user_id/liked_topics', to: 'users#liked_topics'
+  get '/users/:user_id/disliked_topics', to: 'users#disliked_topics'
 
   get '/random_topics', to: 'topics#rand_topic'
 
