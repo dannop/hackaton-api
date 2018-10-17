@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get '/users/:user_id/liked_topics', to: 'users#liked_topics'
   get '/users/:user_id/disliked_topics', to: 'users#disliked_topics'
 
-  get '/random_topics', to: 'topics#rand_topic'
+  get '/random_topics/:user_id', to: 'topics#rand_topic'
 
   get '/topics/:topic_id/comments', to: 'topics#comment_index'
   post '/topics/:topic_id/comments', to: 'topics#comment_create'

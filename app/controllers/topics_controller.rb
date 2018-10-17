@@ -10,10 +10,31 @@ class TopicsController < ApplicationController
 
   # GET /random_topics
   def rand_topic
-	@topic = Topic.all
+
+	@lk = Like.where(user: params[:user_id])
+	@liked = []
+	@lk.each do |l|
+	  @liked = @liked + Topic.where(id: l.topic_id)
+	end
+	
+	@dlk = Dislike.where(user: params[:user_id])
+	@dliked = []
+	@dlk.each do |l|
+	  @dliked = @dliked + Topic.where(id: l.topic_id)
+	end
+
+	@full = @dlk + @lk
+	number = []
+	@full.each do |t|
+	  number = number + [t.id]
+	end
+
 	array = []
+	@topic = Topic.all
 	@topic.each do |t|
-	  array = array + [t]
+	  if number.include?(t.id) != true
+		array = array + [t]
+	  end
 	end
 	@topic = array[rand(0..array.size-1)]
 	render json: @topic
