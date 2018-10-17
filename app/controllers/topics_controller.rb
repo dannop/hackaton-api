@@ -82,10 +82,9 @@ class TopicsController < ApplicationController
 
   # DELETE /topics/1/comments/1/
   def comment_delete
-	@comment = Comment.new(comment_params)
-	@topic = Topic.find(@comment.topic_id)
-	@comment.destroy
-	render json: @topic
+    @comment = Comment.find(params[:comment_id])
+    @comment.destroy
+    render json: @topic
   end
 
 
