@@ -15,8 +15,7 @@ ActiveRecord::Schema.define(version: 20181016225625) do
   create_table "achievments", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.string "image"
-    t.integer "counter"
+    t.string "images"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -90,6 +89,8 @@ ActiveRecord::Schema.define(version: 20181016225625) do
   create_table "user_aches", force: :cascade do |t|
     t.integer "user_id"
     t.integer "achievment_id"
+    t.integer "counter", default: 0
+    t.boolean "check", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["achievment_id"], name: "index_user_aches_on_achievment_id"

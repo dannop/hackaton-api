@@ -7,8 +7,22 @@ class AchievmentsController < ApplicationController
 
     render json: @achievments
   end
+  
 
+  def all_ach
+	@uas = UserAch.where(user_id: params[:user_id])
+	render json: @uas
+  end
 
+  def ach2
+	@ua = UserAch.find_by(user_id: params[:user_id], achievment_id: 2)
+	render json: @ua
+  end
+
+  def ach1
+	@ua = UserAch.find_by(user_id: params[:user_id], achievment_id: 1)
+	render json: @ua
+  end
 
 
 

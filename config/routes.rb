@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   resources :categories
   resources :users
   
+  get '/ach_all/:user_id', to: 'achievments#all_ach'
+  get '/ach1/:user_id', to: 'achievments#ach1'
+  get '/ach2/:user_id', to: 'achievments#ach2'
   
   get '/topics/:topic_id/show_dislike/:user_id', to: 'topics#show_dislike'
   get '/topics/:topic_id/show_like/:user_id', to: 'topics#show_like'

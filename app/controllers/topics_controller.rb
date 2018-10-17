@@ -8,8 +8,19 @@ class TopicsController < ApplicationController
     render json: @topics
   end
 
-  # GET /random_topics
+  # GET /random_topics/1
   def rand_topic
+	@ua = UserAch.find_by(user_id: params[:user_id], achievment_id: 1)
+	if @ua
+	  @ua.counter = @ua.counter + 1
+	  if @ua.counter >= 5
+		@ua.check = true
+	  end
+	else
+	  @ua = UserAch.new(user_id: params[:user_id], achievment_id: 1, counter: 1)
+	end
+	@ua.save
+
 
 	@lk = Like.where(user: params[:user_id])
 	@liked = []
@@ -61,6 +72,7 @@ class TopicsController < ApplicationController
   # PATCH /topics/:topic_id/like/:user_id
   def like
 	@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	@ua = UserAch.find_by(user_id: params[:user_id], achievment_id: 2)
 	@topic = Topic.find(params[:topic_id])
 	@dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
 
@@ -73,12 +85,25 @@ class TopicsController < ApplicationController
 	if @like.present?
 		@like.destroy_all
 		@topic.like_counter = @topic.like_counter - 1
+		@ua.counter = @ua.counter - 1
 	else
 		@like = Like.new(user_id: params[:user_id], topic_id: params[:topic_id])
 		@like.save
 		@topic.like_counter = @topic.like_counter + 1
+
+		if @ua
+
+			@ua.counter = @ua.counter + 1
+
+			if @ua.counter >= 5
+				@ua.check = true
+			end
+		else
+			@ua = UserAch.new(user_id: params[:user_id], achievment_id: 2, counter: 1)
+		end
 	end
 
+	@ua.save
 	@topic.save
 
 	render json: @like
@@ -103,7 +128,9 @@ class TopicsController < ApplicationController
 		@dislike = Dislike.new(user_id: params[:user_id], topic_id: params[:topic_id])
 		@dislike.save
 		@topic.dislike_counter = @topic.dislike_counter + 1
+
 	end
+	@ua.save
 	@topic.save
 
 	render json: @dislike

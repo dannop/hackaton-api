@@ -7,6 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+Achievment.create(name: "5 BUSCAS", description: "Usar o descubra 5 vezes.")
+Achievment.create(name: "5 LIKES", description: "Curtir 5 topicos.")
+
 20.times do |index|
     User.create(
         first_name: Faker::Name.name,
@@ -31,10 +34,4 @@ end
     )
 end  
 
-20.times do |index|
-    Achievment.create(
-        name: Faker::TheFreshPrinceOfBelAir.character,
-        description: Faker::TheFreshPrinceOfBelAir.quote
-    )
-end  
 
