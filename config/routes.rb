@@ -8,8 +8,12 @@ Rails.application.routes.draw do
   
   get '/topics/:topic_id/show_dislike/:user_id', to: 'topics#show_dislike'
   get '/topics/:topic_id/show_like/:user_id', to: 'topics#show_like'
+
   patch '/topics/:topic_id/dislike/:user_id', to: 'topics#dislike'
   patch '/topics/:topic_id/like/:user_id', to: 'topics#like'
+
+  get '/random_topics', to: 'topics#rand_topic'
+
   get '/topics/:topic_id/comments', to: 'topics#comment_index'
   post '/topics/:topic_id/comments', to: 'topics#comment_create'
   delete '/topics/:topic_id/comments/:comment_id', to: 'topics#comment_delete'

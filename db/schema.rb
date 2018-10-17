@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(version: 20181016225625) do
   create_table "topics", force: :cascade do |t|
     t.string "title"
     t.string "content"
+    t.integer "like_counter", default: 0
+    t.integer "dislike_counter", default: 0
     t.integer "category_id"
     t.integer "user_id"
     t.datetime "created_at", null: false

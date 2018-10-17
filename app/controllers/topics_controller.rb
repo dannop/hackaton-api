@@ -8,6 +8,18 @@ class TopicsController < ApplicationController
     render json: @topics
   end
 
+  # GET /random_topics
+  def rand_topic
+	@topic = Topic.all
+	array = []
+	@topic.each do |t|
+	  array = array + [t]
+	end
+	@topic = array[rand(0..array.size-1)]
+	render json: @topic
+  end
+
+
   # GET /topics/1
   def show
     render json: @topic
@@ -28,29 +40,53 @@ class TopicsController < ApplicationController
   # PATCH /topics/:topic_id/like/:user_id
   def like
 	@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	@topic = Topic.find(params[:topic_id])
 	@dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
-	@dislike.destroy_all
+
+	if @dislike.first.present?
+		@dislike.destroy_all
+		@topic.dislike_counter = @topic.dislike_counter - 1
+	end
+
+
 	if @like.present?
 		@like.destroy_all
+		@topic.like_counter = @topic.like_counter - 1
 	else
 		@like = Like.new(user_id: params[:user_id], topic_id: params[:topic_id])
 		@like.save
+		@topic.like_counter = @topic.like_counter + 1
 	end
+
+	@topic.save
+
 	render json: @like
+
   end
   
   # PATCH /topics/:topic_id/dislike/:user_id
   def dislike
 	@dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	@topic = Topic.find(params[:topic_id])
 	@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
-	@like.destroy_all
-	if @dislike.present?
+
+	if @like.first.present?
+		@like.destroy_all
+		@topic.like_counter = @topic.like_counter - 1
+	end
+
+	if @dislike.first.present?
 		@dislike.destroy_all
+		@topic.dislike_counter = @topic.dislike_counter - 1
 	else
 		@dislike = Dislike.new(user_id: params[:user_id], topic_id: params[:topic_id])
 		@dislike.save
+		@topic.dislike_counter = @topic.dislike_counter + 1
 	end
+	@topic.save
+
 	render json: @dislike
+
   end
 
   # POST /topics
@@ -111,7 +147,7 @@ class TopicsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def topic_params
-      params.require(:topic).permit(:title, :content, :category_id, :user_id)
+      params.require(:topic).permit(:title, :content, :category_id, :user_id, :like_counter, :dislike_counter)
     end
 	
     def comment_params
