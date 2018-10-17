@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :image
       t.integer :level
       t.string :firebase_id
+      t.boolean :admin
 
       t.timestamps
     end
