@@ -111,26 +111,25 @@ class TopicsController < ApplicationController
   end
   
   # PATCH /topics/:topic_id/dislike/:user_id
-  def dislike
-	@dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
-	@topic = Topic.find(params[:topic_id])
-	@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
+		def dislike
+		@dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
+		@topic = Topic.find(params[:topic_id])
+		@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
 
-	if @like.first.present?
-		@like.destroy_all
-		@topic.like_counter = @topic.like_counter - 1
-	end
+		if @like.first.present?
+			@like.destroy_all
+			@topic.like_counter = @topic.like_counter - 1
+		end
 
-	if @dislike.first.present?
-		@dislike.destroy_all
-		@topic.dislike_counter = @topic.dislike_counter - 1
-	else
-		@dislike = Dislike.new(user_id: params[:user_id], topic_id: params[:topic_id])
-		@dislike.save
-		@topic.dislike_counter = @topic.dislike_counter + 1
+		if @dislike.first.present?
+			@dislike.destroy_all
+			@topic.dislike_counter = @topic.dislike_counter - 1
+		else
+			@dislike = Dislike.new(user_id: params[:user_id], topic_id: params[:topic_id])
+			@dislike.save
+			@topic.dislike_counter = @topic.dislike_counter + 1
 
-	end
-	@ua.save
+		end
 	@topic.save
 
 	render json: @dislike

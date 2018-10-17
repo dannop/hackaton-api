@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20181016225625) do
     t.string "image"
     t.integer "level"
     t.string "firebase_id"
+    t.boolean "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
