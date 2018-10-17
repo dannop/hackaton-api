@@ -24,6 +24,17 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/1/liked_topics
+  def liked_topics
+	@lk = Like.where(user: params[:user_id])
+	@liked = []
+	@lk.each do |l|
+	  @liked = @liked + Topic.where(id: l.topic_id)
+	end
+	render json: @liked
+  end
+
+
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
