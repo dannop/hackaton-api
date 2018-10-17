@@ -13,6 +13,18 @@ class TopicsController < ApplicationController
     render json: @topic
   end
   
+  # GET /topics/:topic_id/show_like/:user_id
+  def show_like
+	@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	render json: @like
+  end
+
+  # GET /topics/:topic_id/show_dislike/:user_id
+  def show_like
+	@dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	render json: @dislike
+  end
+
   # PATCH /topics/:topic_id/like/:user_id
   def like
 	@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
@@ -68,7 +80,7 @@ class TopicsController < ApplicationController
 	end
   end
 
-  # POST /topics/1/comments/1/DELETE
+  # DELETE /topics/1/comments/1/
   def comment_delete
 	@comment = Comment.new(comment_params)
 	@topic = Topic.find(@comment.topic_id)

@@ -9,6 +9,11 @@ class AchievmentsController < ApplicationController
   end
 
 
+
+
+
+
+
   # GET /achievments/1
   def show
     render json: @achievment
