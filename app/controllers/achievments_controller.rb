@@ -8,6 +8,7 @@ class AchievmentsController < ApplicationController
     render json: @achievments
   end
 
+
   # GET /achievments/1
   def show
     render json: @achievment

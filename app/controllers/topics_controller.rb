@@ -12,6 +12,34 @@ class TopicsController < ApplicationController
   def show
     render json: @topic
   end
+  
+  # PATCH /topics/:topic_id/like/:user_id
+  def like
+	@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	@dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	@dislike.destroy_all
+	if @like.present?
+		@like.destroy_all
+	else
+		@like = Like.new(user_id: params[:user_id], topic_id: params[:topic_id])
+		@like.save
+	end
+	render json: @like
+  end
+  
+  # PATCH /topics/:topic_id/dislike/:user_id
+  def dislike
+	@dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	@like.destroy_all
+	if @dislike.present?
+		@dislike.destroy_all
+	else
+		@dislike = Dislike.new(user_id: params[:user_id], topic_id: params[:topic_id])
+		@dislike.save
+	end
+	render json: @dislike
+  end
 
   # POST /topics
   def create
