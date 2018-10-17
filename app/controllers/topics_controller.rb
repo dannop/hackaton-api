@@ -27,14 +27,14 @@ class TopicsController < ApplicationController
   
   # GET /topics/:topic_id/show_like/:user_id
   def show_like
-	@like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
-	render json: @like
+	  @like = Like.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	  render json: @like
   end
 
   # GET /topics/:topic_id/show_dislike/:user_id
-  def show_like
-	@dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
-	render json: @dislike
+  def show_dislike
+	  @dislike = Dislike.where(user_id: params[:user_id], topic_id: params[:topic_id])
+	  render json: @dislike
   end
 
   # PATCH /topics/:topic_id/like/:user_id
